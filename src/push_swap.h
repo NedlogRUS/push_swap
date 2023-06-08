@@ -11,4 +11,9 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_node;
 
+void check_number(char **strm);
+void eror_out(void);
+t_node	*ps_lstlast(t_node *lst);
+void	check_print_array(t_node **a);
+
 #endif
