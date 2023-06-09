@@ -24,7 +24,7 @@ OBJB = $(SRCB:.c=.o)
 AR = ar rcs
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 HEADER = libft.h
 
 %.o : %.c $(HEADER)
