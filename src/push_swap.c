@@ -48,43 +48,16 @@ int	ps_atoi(const char *str)
 		out = out * 10 + str[i] - '0';
 		i++;
 		if (!(out * sign >= -2147483648 && out * sign <= 2147483647))
-			eror_out();
+			error_out();
 	}
 	return ((int)out * sign);
 }
 
-void eror_out(void)
+void error_out(void)
 {
-	ft_putstr_fd("Eror\n", 2);
+	ft_putstr_fd("Error\n", 2);
 	exit (1);
 }
-
-// void check_input(char *str)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while(str[i++])
-// 		if(!ft_isascii(str[i]))
-// 			eror_out();
-// }
-
-// int *strar_to_int_ar(char **strar)
-// {
-// 	int *out;
-// 	int i;
-
-// 	i = 0;
-// 	while(strar[i])
-// 		i++;
-// 	out = (int *)malloc(sizeof(int) * i + 1);
-// 	if(!out)
-// 		eror_out();
-// 	i = -1;
-// 	while(strar[++i])
-// 		out[i] = ps_atoi(strar[i]);
-// 	return(out);
-// }
 
 t_node	*ps_lstnew(int num)
 {
@@ -119,7 +92,6 @@ t_node	*ps_lstlast(t_node *lst)
 	return (j);
 }
 
-
 t_node *strar_to_node(char **strar, t_node *a)
 {
 	int i;
@@ -128,14 +100,13 @@ t_node *strar_to_node(char **strar, t_node *a)
 	i = 0;
 	a = ps_lstnew(ps_atoi(strar[i++]));
 	if(!a)
-		eror_out();
+		error_out();
 	while(strar[i])
 	{
 		tmp = ps_lstnew(ps_atoi(strar[i]));
 		if(!tmp)
-			eror_out();
+			error_out();
 		ps_lstadd_back(&a, tmp);
-		// free (tmp);
 		i++;
 	}	
 	return(a);
@@ -149,11 +120,10 @@ void has_duplicate(t_node *a, int num)
         if (tmp->num == num) 
 		{
 			write(1, "FIND_DUPLICATE\n", 15);
-            eror_out();
+            error_out();
         }
         tmp = tmp->next;
     }
-    return ; // No duplicates found
 }
 
 void check_duplicates(t_node *a)
@@ -165,36 +135,124 @@ void check_duplicates(t_node *a)
         has_duplicate(tmp->next, tmp->num);
         tmp = tmp->next;
     }
-    return ; // No duplicates found
+}
+
+int	*strar_to_arind(char **strar)
+{
+	int i;
+	int *out;
+
+	i = 0;
+	while(strar[i])
+		i++;
+	out = (int *)malloc(sizeof(int) * i);
+	if(!out)
+		error_out();
+	i = 0;
+	while(strar[i])
+	{
+		out[i] = ps_atoi(strar[i]);
+		i++;
+	}
+	return(out);
+}
+
+int	counter_arind(char **strar)
+{
+	int i;
+
+	i = 0;
+	while(strar[i])
+		i++;
+	return(i);
+}
+
+int *sort_arind(int *arind, int i)
+{
+	int j;
+	int buf;
+
+	j = -1;
+	while(j < i)
+	{
+		j++;
+		if((j + 1) < i && arind[j] > arind[j + 1])
+		{
+			buf = arind[j];
+			arind[j] = arind[j + 1];
+			arind[j + 1] = buf;
+			j = -1;
+		}
+	}
+	return(arind);
+}
+
+void	ind_from_arind_to_a(t_node *a, int *arind)
+{
+	t_node *tmp = a;
+	int j;
+	int x;
+
+    j = 0;
+	x = 0;
+	while (tmp != NULL)
+	{
+		if(tmp->ind == -1) 
+		{
+			while(arind[j] != tmp->num)
+				j++;
+			tmp->ind = j;
+			j = 0;
+			tmp = a;
+			x = 1;
+		}
+		if(x == 0)
+			tmp = tmp->next;
+		else
+			x = 0;
+	}
 }
 
 void ps_check(char *str)
 {
 	char **strar;
+	int *arind;
+	int i;
 	t_node *a;
 
+	i = 0;
 	a = NULL;
+	arind = NULL;
 	strar = ft_split(str, ' ');
 	if(strar[0] == NULL)
 		exit (0);
 	strar = check_number(strar);
 	a = strar_to_node(strar, a);
-	check_print_array(&a);
-	write(1, "OK\n", 3);
+	check_print_array(a);
 	check_duplicates(a);
-	// numar = strar_to_int_ar(strar);
-	// while (strar[i])
-	// 	printf("%s\n", strar[i++]);
-	// write(1, "CHECK\n", 6);
-	// while(numar[i])
-	// 	printf("%i\n", numar[i++]);
+	arind = strar_to_arind(strar);
+	i = counter_arind(strar);
+	arind = sort_arind(arind, i);
+	check_print_arind(arind, i);
+	ind_from_arind_to_a(a, arind);
+	int x = 0;
+	while(strar[x])
+	{
+		free(strar[x]);
+		x++;
+	}
+	free(strar);
+	free(arind);
+	check_print_array(a);
+	// system("leaks push_swap");
+	exit (0);
 }
 
-void	check_print_array(t_node **a)
+void	check_print_array(t_node *a) // it check function
 {
 	t_node	*j;
 
-	j = *a;
+	j = a;
 	if (!j)
 	{
 		write(1, "CHECK_EROR\n", 11);
@@ -203,8 +261,20 @@ void	check_print_array(t_node **a)
 	while (j != NULL)
 	{
 		printf("NUM :%d: ", j->num);
-		printf("IND :%d:\n", j->ind);
+		printf("IND :%lld:\n", j->ind);
 		j = j->next;
+	}
+}
+
+void	check_print_arind(int *a, int i) // it check function
+{
+	int j;
+
+	j = 0;
+	while(j < i)
+	{
+		printf("arind :%d:\n", a[j]);
+		j++;
 	}
 }
 
@@ -222,12 +292,12 @@ char **check_number(char **strar)
 		{
 			j++;
 			if(!strar[i][j])
-				eror_out();
+				error_out();
 		}
 		while(strar[i][j])
 		{
 			if(!ft_isdigit(strar[i][j]))
-				eror_out();
+				error_out();
 			j++;
 		}
 		i++;
@@ -246,11 +316,10 @@ int main (int ac, char **av)
 	while (av[ac])
 	{
 		str = ps_strjoin(str, av[ac]);
-		// printf("%s\n", av[ac]);
 		ac++;
 	}
 	ps_check(str);
-	// printf("%s\n", str);
-	// system("leaks push_swap");
-	exit (0);
+	system("leaks push_swap");
+	// exit (0);
+	return(0);
 }
