@@ -21,21 +21,21 @@ void ps_check(char *str)
 		exit (0);
 	strar = check_number(strar);
 	a = strar_to_node(strar, a);
-	check_print_array(a);
+	// check_print_array(a);
 	check_duplicates(a);
 	arind = strar_to_arind(strar);
 	i = counter_arind(strar);
 	arind = sort_arind(arind, i);
-	check_print_arind(arind, i);
+	// check_print_arind(arind, i);
 	ind_from_arind_to_a(a, arind);
-	int x = 0;
-	while(strar[x])
-	{
-		free(strar[x]);
-		x++;
-	}
-	free(strar);
-	free(arind);
+	// int x = 0;
+	// while(strar[x])
+	// {
+	// 	free(strar[x]);
+	// 	x++;
+	// }
+	// free(strar);
+	// free(arind);
 	check_print_array(a);
 	// system("leaks push_swap");
 	exit (0);
