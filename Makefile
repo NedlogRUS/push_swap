@@ -4,7 +4,7 @@ SRCDIR = src
 OBJDIR = obj
 # SRCBDIR = srcb
 # OBJBDIR = objb
-SRCS = $(addprefix $(SRCDIR)/, push_swap.c)
+SRCS = $(addprefix $(SRCDIR)/, push_swap.c validation.c validation_0.c validation_utils.c)
 OBJS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 # SRCB = $(addprefix $(SRCBDIR)/, so_long_bonus.c check_map_bonus.c check_map_2_bonus.c \
 # render_map_bonus.c moves_bonus.c exit_bonus.c utils_bonus.c)
