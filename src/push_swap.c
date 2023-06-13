@@ -6,15 +6,47 @@ void error_out(void)
 	exit (1);
 }
 
+void	push_swap(t_node **a, t_node **b, int i)
+{
+	int j;
+	int n;
+
+	j = 0;
+	n = 1;
+	while(*a && j < i)
+	{
+		if((*a)->ind <= j)
+		{
+		push_b(a, b);
+		rotate_b(b);
+		j++;
+		}
+		else if((*a)->ind <= j + n)
+		{
+			push_b(a, b);
+			j++;
+		}
+		else
+			rotate_a(a);
+	}
+	check_print_array(*b);
+	// while(*b && i > 0)
+	// {
+	// 	if((*b)->ind <= j)
+
+}
+
 void ps_check(char *str)
 {
 	char **strar;
 	int *arind;
 	int i;
 	t_node *a;
+	t_node *b;
 
 	i = 0;
 	a = NULL;
+	b = NULL;
 	arind = NULL;
 	strar = ft_split(str, ' ');
 	if(strar[0] == NULL)
@@ -37,6 +69,7 @@ void ps_check(char *str)
 	// free(strar);
 	// free(arind);
 	check_print_array(a);
+	push_swap(&a, &b, i);
 	// system("leaks push_swap");
 	exit (0);
 }
@@ -81,6 +114,8 @@ int main (int ac, char **av)
 	str = ft_strdup(av[ac++]);
 	while (av[ac])
 	{
+		if(!check_number(&av[ac]))
+			error_out();
 		str = ps_strjoin(str, av[ac]);
 		ac++;
 	}
