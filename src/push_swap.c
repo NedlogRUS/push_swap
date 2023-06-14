@@ -6,37 +6,41 @@ void error_out(void)
 	exit (1);
 }
 
-void	push_swap(t_node **a, t_node **b, int i)
+void	check_sort_a(t_node *a)
 {
-	int j;
-	int n;
+	int i;
 
-	j = 0;
-	n = 1;
-	while(*a && j < i)
+	i = 0;
+	while(a)
 	{
-		if((*a)->ind <= j)
-		{
-		push_b(a, b);
-		rotate_b(b);
-		j++;
-		}
-		else if((*a)->ind <= j + n)
-		{
-			push_b(a, b);
-			j++;
-		}
-		else
-			rotate_a(a);
+		if(a->ind != i)
+			return;
+		a = a->next;
+		i++;
 	}
-	check_print_array(*b);
-	// while(*b && i > 0)
-	// {
-	// 	if((*b)->ind <= j)
-
+	exit(0);
 }
 
-void ps_check(char *str)
+void	exception(t_node **a, t_node **b, int i)
+{
+	int j;
+
+	j = 0;
+	if(i == 2)
+		j += sort_2_a(a);
+	else if(i == 3)
+		j += sort_3(a);
+	else if(i == 4)
+		j += sort_4(a, b, i);
+	else if(i == 5)
+		j += sort_5(a, b);
+	if(j != 0)
+	{ 
+		exit(0);
+	}
+}
+
+void push_swap(char *str)
 {
 	char **strar;
 	int *arind;
@@ -53,56 +57,47 @@ void ps_check(char *str)
 		exit (0);
 	strar = check_number(strar);
 	a = strar_to_node(strar, a);
-	// check_print_array(a);
 	check_duplicates(a);
 	arind = strar_to_arind(strar);
 	i = counter_arind(strar);
 	arind = sort_arind(arind, i);
-	// check_print_arind(arind, i);
 	ind_from_arind_to_a(a, arind);
-	// int x = 0;
-	// while(strar[x])
-	// {
-	// 	free(strar[x]);
-	// 	x++;
-	// }
-	// free(strar);
-	// free(arind);
-	check_print_array(a);
-	push_swap(&a, &b, i);
-	// system("leaks push_swap");
+	check_sort_a(a);
+	exception(&a, &b, i);
+	butterfly(&a, &b, i);
+	push_from_b_to_a(&a, &b, i);
 	exit (0);
 }
 
-void	check_print_array(t_node *a) // it check function
-{
-	t_node	*j;
+// void	check_print_array(t_node *a) // it check function
+// {
+// 	t_node	*j;
 
-	j = a;
-	if (!j)
-	{
-		write(1, "CHECK_EROR\n", 11);
-		exit(1);
-	}
-	while (j != NULL)
-	{
-		printf("NUM :%d: ", j->num);
-		printf("IND :%lld:\n", j->ind);
-		j = j->next;
-	}
-}
+// 	j = a;
+// 	if (!j)
+// 	{
+// 		write(1, "CHECK_EROR\n", 11);
+// 		exit(1);
+// 	}
+// 	while (j != NULL)
+// 	{
+// 		printf("NUM :%d: ", j->num);
+// 		printf("IND :%lld:\n", j->ind);
+// 		j = j->next;
+// 	}
+// }
 
-void	check_print_arind(int *a, int i) // it check function
-{
-	int j;
+// void	check_print_arind(int *a, int i) // it check function
+// {
+// 	int j;
 
-	j = 0;
-	while(j < i)
-	{
-		printf("arind :%d:\n", a[j]);
-		j++;
-	}
-}
+// 	j = 0;
+// 	while(j < i)
+// 	{
+// 		printf("arind :%d:\n", a[j]);
+// 		j++;
+// 	}
+// }
 
 int main (int ac, char **av)
 {
@@ -119,7 +114,6 @@ int main (int ac, char **av)
 		str = ps_strjoin(str, av[ac]);
 		ac++;
 	}
-	ps_check(str);
-	// exit (0);
+	push_swap(str);
 	return(0);
 }

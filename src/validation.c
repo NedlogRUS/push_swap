@@ -26,10 +26,7 @@ void has_duplicate(t_node *a, int num)
     
     while (tmp != NULL) {
         if (tmp->num == num) 
-		{
-			write(1, "FIND_DUPLICATE\n", 15);
             error_out();
-        }
         tmp = tmp->next;
     }
 }

@@ -20,6 +20,7 @@ void swap_a(t_node **a)
 	if((*a)->next == NULL)
 		return ;
 	swap(a);
+	// ft_putstr_fd("sa\n", 1);
 	write(1, "sa\n", 3);
 }
 
