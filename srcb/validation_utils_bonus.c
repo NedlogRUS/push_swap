@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation_utils.c                                 :+:      :+:    :+:   */
+/*   validation_utils_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apanikov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 02:09:18 by apanikov          #+#    #+#             */
-/*   Updated: 2023/06/15 02:09:20 by apanikov         ###   ########.fr       */
+/*   Created: 2023/06/15 21:14:46 by apanikov          #+#    #+#             */
+/*   Updated: 2023/06/15 21:14:48 by apanikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 char	*ps_strjoin(char *s1, char const *s2)
 {

@@ -1,52 +1,76 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   rrotate_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apanikov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 02:09:54 by apanikov          #+#    #+#             */
-/*   Updated: 2023/06/15 02:09:56 by apanikov         ###   ########.fr       */
+/*   Created: 2023/06/15 21:14:08 by apanikov          #+#    #+#             */
+/*   Updated: 2023/06/15 21:14:10 by apanikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-void	rotate(t_node **s)
+long long	ps_lstsize(t_node *lst)
 {
-	t_node	*tmp;
-	t_node	*tmp1;
+	long long	i;
+	t_node		*j;
 
+	j = lst;
+	i = 0;
+	if (!lst)
+		return (0);
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	lst = j;
+	return (i);
+}
+
+void	rrotate(t_node **s)
+{
+	t_node		*tmp;
+	t_node		*tmp1;
+	long long	i;
+
+	i = ps_lstsize(*s);
 	tmp = *s;
-	tmp1 = (*s)->next;
 	while ((*s)->next)
 		*s = (*s)->next;
-	(*s)->next = tmp;
-	tmp->next = NULL;
+	tmp1 = *s;
+	tmp1->next = tmp;
+	*s = tmp1;
+	while (i > 1)
+	{
+		*s = (*s)->next;
+		i--;
+	}
+	(*s)->next = NULL;
 	*s = tmp1;
 }
 
-void	rotate_a(t_node **a)
+void	rrotate_a(t_node **a)
 {
 	if (!*a)
 		return ;
 	if ((*a)->next == NULL)
 		return ;
-	rotate(a);
-	write(1, "ra\n", 3);
+	rrotate(a);
 }
 
-void	rotate_b(t_node **b)
+void	rrotate_b(t_node **b)
 {
 	if (!*b)
 		return ;
 	if ((*b)->next == NULL)
 		return ;
-	rotate(b);
-	write(1, "rb\n", 3);
+	rrotate(b);
 }
 
-void	rotate_rr(t_node **a, t_node **b)
+void	rrotate_rrr(t_node **a, t_node **b)
 {
 	if (!*a)
 		return ;
@@ -56,7 +80,6 @@ void	rotate_rr(t_node **a, t_node **b)
 		return ;
 	if ((*b)->next == NULL)
 		return ;
-	rotate(a);
-	rotate(b);
-	write(1, "rr\n", 3);
+	rrotate(a);
+	rrotate(b);
 }

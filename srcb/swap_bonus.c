@@ -1,62 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   swap_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apanikov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 02:09:54 by apanikov          #+#    #+#             */
-/*   Updated: 2023/06/15 02:09:56 by apanikov         ###   ########.fr       */
+/*   Created: 2023/06/15 21:14:36 by apanikov          #+#    #+#             */
+/*   Updated: 2023/06/15 21:14:37 by apanikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-void	rotate(t_node **s)
+void	swap(t_node **s)
 {
 	t_node	*tmp;
-	t_node	*tmp1;
+	t_node	*tmp2;
 
 	tmp = *s;
-	tmp1 = (*s)->next;
-	while ((*s)->next)
-		*s = (*s)->next;
-	(*s)->next = tmp;
-	tmp->next = NULL;
-	*s = tmp1;
+	tmp2 = (*s)->next;
+	*s = (*s)->next;
+	tmp->next = (*s)->next;
+	tmp2->next = tmp;
+	*s = tmp2;
 }
 
-void	rotate_a(t_node **a)
+void	swap_a(t_node **a)
 {
 	if (!*a)
 		return ;
 	if ((*a)->next == NULL)
 		return ;
-	rotate(a);
-	write(1, "ra\n", 3);
+	swap(a);
 }
 
-void	rotate_b(t_node **b)
+void	swap_b(t_node **b)
 {
 	if (!*b)
 		return ;
 	if ((*b)->next == NULL)
 		return ;
-	rotate(b);
-	write(1, "rb\n", 3);
+	swap(b);
 }
 
-void	rotate_rr(t_node **a, t_node **b)
+void	swap_ss(t_node **a, t_node **b)
 {
-	if (!*a)
+	if (!*b || !*a)
 		return ;
-	if ((*a)->next == NULL)
+	if ((*b)->next == NULL || (*a)->next == NULL)
 		return ;
-	if (!*b)
-		return ;
-	if ((*b)->next == NULL)
-		return ;
-	rotate(a);
-	rotate(b);
-	write(1, "rr\n", 3);
+	swap(a);
+	swap(b);
 }

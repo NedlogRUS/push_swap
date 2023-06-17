@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   push_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apanikov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 02:09:29 by apanikov          #+#    #+#             */
-/*   Updated: 2023/06/15 02:09:31 by apanikov         ###   ########.fr       */
+/*   Created: 2023/06/15 21:12:29 by apanikov          #+#    #+#             */
+/*   Updated: 2023/06/15 21:12:30 by apanikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 void	push(t_node **f, t_node **s)
 {
@@ -29,7 +29,6 @@ void	push_a(t_node **a, t_node **b)
 	if (!*b)
 		return ;
 	push(b, a);
-	write(1, "pa\n", 3);
 }
 
 void	push_b(t_node **a, t_node **b)
@@ -37,5 +36,4 @@ void	push_b(t_node **a, t_node **b)
 	if (!*a)
 		return ;
 	push(a, b);
-	write(1, "pb\n", 3);
 }

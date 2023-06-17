@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation_0.c                                     :+:      :+:    :+:   */
+/*   validation_0_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apanikov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 02:08:32 by apanikov          #+#    #+#             */
-/*   Updated: 2023/06/15 02:08:35 by apanikov         ###   ########.fr       */
+/*   Created: 2023/06/15 21:12:54 by apanikov          #+#    #+#             */
+/*   Updated: 2023/06/15 21:13:49 by apanikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 int	counter_arind(char **strar)
 {
@@ -67,6 +67,21 @@ void	ind_from_arind_to_a(t_node *a, int *arind)
 		else
 			x = 0;
 	}
+}
+
+int	check_sort_a(t_node *a)
+{
+	int	i;
+
+	i = 0;
+	while (a)
+	{
+		if (a->ind != i)
+			return (0);
+		a = a->next;
+		i++;
+	}
+	return (1);
 }
 
 int	check_empty(char *strar)

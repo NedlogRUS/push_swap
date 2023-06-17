@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push_swap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apanikov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 02:08:09 by apanikov          #+#    #+#             */
-/*   Updated: 2023/06/15 02:08:11 by apanikov         ###   ########.fr       */
+/*   Created: 2023/06/15 21:13:58 by apanikov          #+#    #+#             */
+/*   Updated: 2023/06/15 21:13:59 by apanikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 void	error_out(void)
 {
@@ -18,36 +18,51 @@ void	error_out(void)
 	exit (1);
 }
 
-void	check_sort_a(t_node *a)
+void	do_push_swap(t_node **a, t_node **b, char *to_do)
 {
-	int	i;
-
-	i = 0;
-	while (a)
-	{
-		if (a->ind != i)
-			return ;
-		a = a->next;
-		i++;
-	}
-	exit(0);
+	if (ft_strcmp(to_do, "sa\n") == 0)
+		swap_a(a);
+	else if (ft_strcmp(to_do, "sb\n") == 0)
+		swap_b(b);
+	else if (ft_strcmp(to_do, "ss\n") == 0)
+		swap_ss(a, b);
+	else if (ft_strcmp(to_do, "pa\n") == 0)
+		push_a(a, b);
+	else if (ft_strcmp(to_do, "pb\n") == 0)
+		push_b(a, b);
+	else if (ft_strcmp(to_do, "ra\n") == 0)
+		rotate_a(a);
+	else if (ft_strcmp(to_do, "rb\n") == 0)
+		rotate_b(b);
+	else if (ft_strcmp(to_do, "rr\n") == 0)
+		rotate_rr(a, b);
+	else if (ft_strcmp(to_do, "rra\n") == 0)
+		rrotate_a(a);
+	else if (ft_strcmp(to_do, "rrb\n") == 0)
+		rrotate_b(b);
+	else if (ft_strcmp(to_do, "rrr\n") == 0)
+		rrotate_rrr(a, b);
+	else
+		error_out();
 }
 
-void	exception(t_node **a, t_node **b, int i)
+void	checker(t_node **a, t_node **b)
 {
-	int	j;
+	char	*to_do;
 
-	j = 0;
-	if (i == 2)
-		j += sort_2_a(a);
-	else if (i == 3)
-		j += sort_3(a);
-	else if (i == 4)
-		j += sort_4(a, b, i);
-	else if (i == 5)
-		j += sort_5(a, b);
-	if (j != 0)
-		exit(0);
+	while (1)
+	{
+		to_do = get_next_line(0);
+		if (!to_do)
+			break ;
+		do_push_swap(a, b, to_do);
+		free(to_do);
+	}
+	if (check_sort_a(*a) == 1 && !*b)
+		write(1, "OK\n", 3);
+	else
+		write(1, "KO\n", 3);
+	exit(0);
 }
 
 void	push_swap(char *str)
@@ -72,11 +87,7 @@ void	push_swap(char *str)
 	i = counter_arind(strar);
 	arind = sort_arind(arind, i);
 	ind_from_arind_to_a(a, arind);
-	check_sort_a(a);
-	exception(&a, &b, i);
-	butterfly(&a, &b, i);
-	push_from_b_to_a(&a, &b, i);
-	exit(0);
+	checker(&a, &b);
 }
 
 int	main(int ac, char **av)

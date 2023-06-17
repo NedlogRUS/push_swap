@@ -1,9 +1,21 @@
-# include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rrotate.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apanikov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/15 02:08:22 by apanikov          #+#    #+#             */
+/*   Updated: 2023/06/15 02:09:46 by apanikov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
 
 long long	ps_lstsize(t_node *lst)
 {
-	long long		i;
-	t_node	*j;
+	long long	i;
+	t_node		*j;
 
 	j = lst;
 	i = 0;
@@ -26,12 +38,12 @@ void	rrotate(t_node **s)
 
 	i = ps_lstsize(*s);
 	tmp = *s;
-	while((*s)->next)
+	while ((*s)->next)
 		*s = (*s)->next;
 	tmp1 = *s;
 	tmp1->next = tmp;
 	*s = tmp1;
-	while(i > 1)
+	while (i > 1)
 	{
 		*s = (*s)->next;
 		i--;
@@ -42,9 +54,9 @@ void	rrotate(t_node **s)
 
 void	rrotate_a(t_node **a)
 {
-	if(!a)
+	if (!*a)
 		return ;
-	if((*a)->next == NULL)
+	if ((*a)->next == NULL)
 		return ;
 	rrotate(a);
 	write(1, "rra\n", 4);
@@ -52,9 +64,9 @@ void	rrotate_a(t_node **a)
 
 void	rrotate_b(t_node **b)
 {
-	if(!b)
+	if (!*b)
 		return ;
-	if((*b)->next == NULL)
+	if ((*b)->next == NULL)
 		return ;
 	rrotate(b);
 	write(1, "rrb\n", 4);
@@ -62,13 +74,13 @@ void	rrotate_b(t_node **b)
 
 void	rrotate_rrr(t_node **a, t_node **b)
 {
-	if(!a)
+	if (!*a)
 		return ;
-	if((*a)->next == NULL)
+	if ((*a)->next == NULL)
 		return ;
-	if(!b)
+	if (!*b)
 		return ;
-	if((*b)->next == NULL)
+	if ((*b)->next == NULL)
 		return ;
 	rrotate(a);
 	rrotate(b);
